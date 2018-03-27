@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware } from 'redux';
-import { queryMiddleware } from 'redux-query';
+import { queryMiddleware } from 'redux-query-immutable';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import reducers, { getQueries, getEntities } from 'reducers';

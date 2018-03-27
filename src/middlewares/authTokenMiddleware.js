@@ -1,6 +1,6 @@
 import { token } from 'helpers';
 import _ from 'lodash';
-import { actionTypes } from 'redux-query';
+import { actionTypes } from 'redux-query-immutable';
 
 /**
  * Add Authorization header to api action
