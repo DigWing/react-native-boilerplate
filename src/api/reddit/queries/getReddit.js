@@ -6,6 +6,9 @@ import { reddit } from 'schemas';
 export default ({ _reddit }) => ({
   url: endpoints.getRedditUrl(_reddit),
   transform: response => normalize(response.data.children, reddit.arrayOfPostSchemas).entities,
+  meta: {
+    // authToken: true,
+  },
   options: {
     headers: {
       Accept: 'application/json',

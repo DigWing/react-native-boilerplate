@@ -3,11 +3,11 @@ import { queryMiddleware } from 'redux-query';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'remote-redux-devtools';
 import reducers, { getQueries, getEntities } from 'reducers';
-// import { authTokenMiddleware } from 'middlewares';
+import { authTokenMiddleware } from 'middlewares';
 
 export default () => {
   let middlewares = [
-    // authTokenMiddleware,
+    authTokenMiddleware,
     queryMiddleware(getQueries, getEntities),
   ];
 

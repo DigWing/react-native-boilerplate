@@ -1,5 +1,6 @@
-import { isRSAA, CALL_API } from 'redux-api-middleware';
 import { token } from 'helpers';
+import _ from 'lodash';
+import { actionTypes } from 'redux-query';
 
 /**
  * Add Authorization header to api action
@@ -7,29 +8,32 @@ import { token } from 'helpers';
  * @return {void}
  */
 export default () => next => (action) => {
-  if (!isRSAA(action) || !action[CALL_API].authToken) {
+  if ((
+    _.isEqual(action.type, actionTypes.REQUEST_ASYNC)
+      || _.isEqual(action.type, actionTypes.MUTATE_ASYNC))
+    && action.meta.authToken) {
+    console.log('middleware', action);
+    const callAPI = action;
+    const { headers } = action.options;
+
+    delete callAPI.meta.authToken;
+
+    return token.getToken()
+      .then((T) => {
+        if (T) {
+          callAPI.options.headers = {
+            ...headers,
+            Authorization: `Bearer ${T}`,
+          };
+        }
+
+        return next(action);
+      })
+      .catch((err) => {
+        console.log(err);
+        return next(action);
+      });
+  } else {
     return next(action);
   }
-
-  const callAPI = action[CALL_API];
-  const { headers } = callAPI;
-
-  // Remove 'authToken' to pass validation
-  delete callAPI.authToken;
-
-  return token.getToken()
-    .then((T) => {
-      if (T) {
-        callAPI.headers = {
-          ...headers,
-          Authorization: `Bearer ${T}`,
-        };
-      }
-
-      return next(action);
-    })
-    .catch((err) => {
-      console.error(err);
-      return next(action);
-    });
 };
