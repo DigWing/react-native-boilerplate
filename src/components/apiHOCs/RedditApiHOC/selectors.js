@@ -1,11 +1,11 @@
 import { createSelector } from 'reselect';
-import { getEntities } from 'reducers';
-import { reddit as redditApi } from 'api';
+import { getEntities, getResults } from 'reducers';
+import Immutable from 'immutable';
 import { denormalize } from 'normalizr';
 import { reddit as redditSchemas } from 'schemas';
 
 export const getRedditPosts = createSelector(
-  state => redditApi.selectors.getPosts(state),
+  (state, resultKey) => getResults(state).get(resultKey, Immutable.List()),
   state => getEntities(state),
   (result, entities) =>
     denormalize(

@@ -1,14 +1,14 @@
 import { createStore, applyMiddleware } from 'redux';
-import { queryMiddleware } from 'redux-query-immutable';
+import { queryMiddleware } from '@digitalwing.co/redux-query-immutable';
 import logger from 'redux-logger';
 import { composeWithDevTools } from 'remote-redux-devtools';
-import reducers, { getQueries, getEntities } from 'reducers';
+import reducers, { getQueries, getEntities, getResults } from 'reducers';
 import { authTokenMiddleware } from 'middlewares';
 
 export default () => {
   let middlewares = [
     authTokenMiddleware,
-    queryMiddleware(getQueries, getEntities),
+    queryMiddleware(getQueries, getEntities, getResults),
   ];
 
   const composeEnhancers = composeWithDevTools({ realtime: true });

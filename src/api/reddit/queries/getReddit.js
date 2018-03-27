@@ -3,9 +3,11 @@ import endpoints from 'api/endpoints';
 import Immutable from 'immutable';
 import { reddit } from 'schemas';
 
-export default ({ _reddit }) => ({
+export default ({ _reddit, resultKey = 'reddit' }) => ({
   url: endpoints.getRedditUrl(_reddit),
   transform: response => normalize(response.data.children, reddit.arrayOfPostSchemas).entities,
+  transformResult: response =>
+    ({ [resultKey]: normalize(response.data.children, reddit.arrayOfPostSchemas).result }),
   meta: {
     // authToken: true,
   },
@@ -16,5 +18,8 @@ export default ({ _reddit }) => ({
   },
   update: {
     posts: (prevPosts = Immutable.Map(), posts) => prevPosts.mergeDeep(posts),
+  },
+  updateResult: {
+    [resultKey]: (prevResult = Immutable.List(), result) => prevResult.merge(result),
   },
 });

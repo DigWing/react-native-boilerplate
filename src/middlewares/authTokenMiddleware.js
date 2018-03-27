@@ -1,6 +1,6 @@
 import { token } from 'helpers';
 import _ from 'lodash';
-import { actionTypes } from 'redux-query-immutable';
+import { actionTypes } from '@digitalwing.co/redux-query-immutable';
 
 /**
  * Add Authorization header to api action
@@ -12,7 +12,6 @@ export default () => next => (action) => {
     _.isEqual(action.type, actionTypes.REQUEST_ASYNC)
       || _.isEqual(action.type, actionTypes.MUTATE_ASYNC))
     && action.meta.authToken) {
-    console.log('middleware', action);
     const callAPI = action;
     const { headers } = action.options;
 

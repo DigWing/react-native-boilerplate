@@ -1,15 +1,16 @@
 import { compose } from 'recompose';
 import endpoints from 'api/endpoints';
-import { connectRequest, querySelectors } from 'redux-query-immutable';
+import { connectRequest, querySelectors } from '@digitalwing.co/redux-query-immutable';
 import { connect } from 'react-redux';
 import { reddit } from 'api';
 
 import { getRedditPosts } from './selectors';
 
 const RedditApiHOC = () => WrappedComponent => compose(
-  connectRequest(({ selectedReddit = 'reactjs' }) => reddit.queries.getReddit({ _reddit: selectedReddit })),
+  connectRequest(({ selectedReddit = 'reactjs' }) =>
+    reddit.queries.getReddit({ _reddit: selectedReddit, resultKey: 'reddits' })),
   connect(state => ({
-    redditPosts: getRedditPosts(state),
+    redditPosts: getRedditPosts(state, 'reddits'),
     redditIsFetching: querySelectors.isPending(
       state.get('queries'),
       { url: endpoints.getRedditUrl('reactjs') },
