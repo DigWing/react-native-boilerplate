@@ -3,8 +3,9 @@ import endpoints from 'api/endpoints';
 import Immutable from 'immutable';
 import { reddit } from 'schemas';
 
-export default ({ _reddit, resultKey = 'reddit' }) => ({
+export default ({ _reddit, resultKey = 'reddit', requestCallback }) => ({
   url: endpoints.getRedditUrl(_reddit),
+  requestCallback,
   transform: response => normalize(response.data.children, reddit.arrayOfPostSchemas).entities,
   transformResult: response =>
     ({ [resultKey]: normalize(response.data.children, reddit.arrayOfPostSchemas).result }),

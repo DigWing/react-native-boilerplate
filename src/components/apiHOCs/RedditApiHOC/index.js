@@ -8,7 +8,7 @@ import { getRedditPosts } from './selectors';
 
 const RedditApiHOC = () => WrappedComponent => compose(
   connectRequest(({ selectedReddit = 'reactjs' }) =>
-    reddit.queries.getReddit({ _reddit: selectedReddit, resultKey: 'reddits' })),
+    reddit.queries.getReddit({ _reddit: selectedReddit, resultKey: 'reddits', requestCallback: resp => console.log(resp) })),
   connect(state => ({
     redditPosts: getRedditPosts(state, 'reddits'),
     redditIsFetching: querySelectors.isPending(

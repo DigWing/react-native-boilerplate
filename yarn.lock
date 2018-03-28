@@ -392,9 +392,9 @@
     lodash "^4.2.0"
     to-fast-properties "^2.0.0"
 
-"@digitalwing.co/redux-query-immutable@^2.3.2":
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/@digitalwing.co/redux-query-immutable/-/redux-query-immutable-2.3.2.tgz#cb9a28f25d47cc40810805d63a5f870dbadc3e3c"
+"@digitalwing.co/redux-query-immutable@2.3.4":
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/@digitalwing.co/redux-query-immutable/-/redux-query-immutable-2.3.4.tgz#eb4c7e55bd0f1517dbddf28c3de0c7d64c2ba71e"
   dependencies:
     backo "^1.1.0"
     immutable "^3.8.1"
